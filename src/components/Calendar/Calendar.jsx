@@ -6,14 +6,8 @@ import dayjs from "dayjs";
 export default function () {
   const localizer = dayjsLocalizer(dayjs);
   return (
-    <div>
-      <Calendar
-        localizer={localizer}
-        style={{
-          height: 500,
-          width: 500,
-        }}
-      />
+    <div className="calendar">
+      <Calendar localizer={localizer} />
     </div>
   );
 }
