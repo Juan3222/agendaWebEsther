@@ -1,4 +1,4 @@
-import "./_App.scss";
+import "./App.scss";
 import Calendar from "./components/Calendar/Calendar.jsx";
 import Header from "./components/Header/Header.jsx";
 import React from "react";
