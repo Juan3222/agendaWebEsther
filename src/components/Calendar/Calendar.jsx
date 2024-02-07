@@ -7,6 +7,13 @@ dayjs.locale("es");
 
 export default function () {
   const localizer = dayjsLocalizer(dayjs);
+  const events = [
+    {
+      start: dayjs("2024-02-08T12:00:00").toDate(),
+      end: dayjs("2024-02-08T13:00:00").toDate(),
+      title: "María Gutierrez",
+    },
+  ];
   const messages = {
     allDay: "Todo el día",
     previous: "Anterior",
@@ -23,7 +30,7 @@ export default function () {
   };
   return (
     <div className="calendar">
-      <Calendar localizer={localizer} messages={messages} />
+      <Calendar localizer={localizer} messages={messages} events={events} />
     </div>
   );
 }
