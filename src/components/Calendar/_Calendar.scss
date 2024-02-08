@@ -1,4 +1,7 @@
 .calendar {
-  height: 501px;
-  width: 501px;
+  margin: 3rem auto 3rem auto;
+  height: 90vh;
+  width: 80%;
+  border: 0.5rem solid var(--color-primario);
+  border-radius: 1rem;
 }
