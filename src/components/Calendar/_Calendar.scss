@@ -1,0 +1,17 @@
+:root{
+  --color-primario: #F6839C;
+  --color-secundario: #ff6600;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.calendar {
+  margin: 3rem auto 3rem auto;
+  height: 90vh;
+  width: 80%;
+  border: 1rem solid var(--color-primario);
+  border-radius: 1rem;
+}
