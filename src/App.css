@@ -1,5 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 .header {
   background-color: black;
   width: 200px;
   height: 200px;
-}/*# sourceMappingURL=App.css.map */
+} /*# sourceMappingURL=App.css.map */

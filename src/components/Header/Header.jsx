@@ -1,5 +1,4 @@
 import React from "react";
-import "./_Header.scss";
 import logo from "../../assets/logo.jpg";
 
 export default function Header() {
