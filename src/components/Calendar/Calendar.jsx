@@ -38,6 +38,8 @@ export default function YourComponent() {
           start: dayjs.unix(data.start.seconds).toDate(),
           end: dayjs.unix(data.end.seconds).toDate(),
           title: data.title,
+          paid: data.paid,
+          online: data.online,
         };
         setEvents([formattedData]); // Guardardo los eventos en el estado
       })
@@ -45,10 +47,35 @@ export default function YourComponent() {
         console.error("Error getting document:", error);
       });
   }, []);
+  const components = {
+    event: (props) => {
+      const { paid, online } = props.event;
+      // Condicionales simples, revisa el valor bool de las propiedades paid y online, para agregar el ícono de consulta pagada, y/o el de consulta online (esto sería la idea en general, si ves como hacerlo más prolijo, mejor)
+      if (paid == true && online == true) {
+        {
+          return <div>{props.title + "💲" + " 🎧 "}</div>;
+        }
+      } else if (paid == true) {
+        return <div>{props.title + "💲"}</div>;
+      } else if (online == true) {
+        return <div>{props.title + " 🎧 "}</div>;
+      }
+    },
+  };
 
   return (
     <div className="calendar">
-      <Calendar localizer={localizer} messages={messages} events={events} />
+      <Calendar
+        localizer={localizer}
+        messages={messages}
+        events={events}
+        formats={{
+          dayHeaderFormat: (date) => {
+            return dayjs(date).format("dddd - DD/MM/YYYY");
+          },
+        }}
+        components={components}
+      />
     </div>
   );
 }
