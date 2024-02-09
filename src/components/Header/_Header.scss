@@ -1,9 +1,9 @@
-:root{
-  --color-primario: #F6839C;
+:root {
+  --color-primario: #f6839c;
   --color-secundario: #ff6600;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
 }
@@ -16,14 +16,14 @@
   align-items: center;
 }
 
-.logo{
+.logo {
   position: relative;
   height: 70%;
   margin-left: 2rem;
   border-radius: 1rem;
 }
 
-.header h1{
+.header h1 {
   position: absolute;
   width: 100%;
   display: flex;
