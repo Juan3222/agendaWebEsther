@@ -4,7 +4,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { db } from "../../firebase/config";
-import { getDoc, doc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 
 dayjs.locale("es");
 
@@ -24,30 +24,61 @@ export default function YourComponent() {
     noEventsInRange: "Sin eventos",
   };
 
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+    console.log(event.target.value);
+  };
+
   const localizer = dayjsLocalizer(dayjs);
 
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const docRef = doc(db, "eventos", "sCE388WNBBBqf4DUIOus"); // Creo constante que iguala la db (database), coleccion "eventos" y la id de uno de los documentos (desp hay que cambiarlo por useParams)
-    getDoc(docRef)
-      .then((resp) => {
-        const data = resp.data(); // Despues de resolver la promesa creo data = a la data de firebase
-        const formattedData = { // Le pedi a chat gpt que me cambie el formato por que traia la fecha en segundos
-          start: dayjs.unix(data.start.seconds).toDate(),
-          end: dayjs.unix(data.end.seconds).toDate(),
-          title: data.title,
-        };
-        setEvents([formattedData]); // Guardardo los eventos en el estado
+    const eventosRef = collection(db, "eventos");
+    getDocs(eventosRef)
+      .then((querySnapshot) => {
+        const eventData = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+
+          let title = data.title;
+
+        // Condición para añadir "(P)" al título si data.paid es true
+        if (data.paid) {
+          title += " (P)";
+        }
+
+        // Condición para añadir "(O)" al título si data.online es true
+        if (data.online) {
+          title += " (O)";
+        }
+
+          const formattedData = {
+            id: doc.id,
+            start: dayjs.unix(data.start.seconds).toDate(),
+            end: dayjs.unix(data.end.seconds).toDate(),
+            title: title,
+          };
+          eventData.push(formattedData);
+        });
+        setEvents(eventData);
       })
       .catch((error) => {
-        console.error("Error getting document:", error);
+        console.error("Error getting documents: ", error);
       });
   }, []);
 
   return (
     <div className="calendar">
       <Calendar localizer={localizer} messages={messages} events={events} />
+
+      <input 
+        type="date" 
+        value={selectedDate} 
+        onChange={handleDateChange} 
+      />
     </div>
   );
 }
