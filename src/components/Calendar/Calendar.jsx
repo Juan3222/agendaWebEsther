@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { db } from "../../firebase/config";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, getDocs, collection } from "firebase/firestore";
 
 dayjs.locale("es");
 
@@ -27,26 +28,37 @@ export default function YourComponent() {
   const localizer = dayjsLocalizer(dayjs);
 
   const [events, setEvents] = useState([]);
+  const colRef = collection(db, "eventos");
 
   useEffect(() => {
-    const docRef = doc(db, "eventos", "sCE388WNBBBqf4DUIOus"); // Creo constante que iguala la db (database), coleccion "eventos" y la id de uno de los documentos (desp hay que cambiarlo por useParams)
-    getDoc(docRef)
-      .then((resp) => {
-        const data = resp.data(); // Despues de resolver la promesa creo data = a la data de firebase
+    getDocs(colRef)
+      .then((snapshot) => {
+        let data = [];
+        snapshot.docs.forEach((doc) => {
+          data.push({
+            ...doc.data(),
+            id: doc.id,
+            /* start: dayjs.unix(data.start.seconds).toDate(),
+            end: dayjs.unix(data.end.seconds).toDate(), */
+          });
+          console.log(data);
+        }); //Hasta aquí, es toda la función para traer la coleccion entera, usé el metodo getDocs, en consola podes ver que trae ambos documentos de firestore, pero a la hora de formatear la fecha, da error, lo dejé comentado para que lo veas. También dejé sin comentar formattedData, ahora mismo no hace nada, pero para que veas si podes hacer algo
         const formattedData = {
-          // Le pedi a chat gpt que me cambie el formato por que traia la fecha en segundos
           start: dayjs.unix(data.start.seconds).toDate(),
           end: dayjs.unix(data.end.seconds).toDate(),
           title: data.title,
           paid: data.paid,
           online: data.online,
         };
-        setEvents([formattedData]); // Guardardo los eventos en el estado
+        setEvents([formattedData]);
+
+        console.log(formattedData);
       })
       .catch((error) => {
         console.error("Error getting document:", error);
       });
   }, []);
+
   const components = {
     event: (props) => {
       const { paid, online } = props.event;
