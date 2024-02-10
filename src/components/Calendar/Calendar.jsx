@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { db } from "../../firebase/config";
 import { getDocs, collection, addDoc } from "firebase/firestore";
-import "firebase/firestore";
 
 dayjs.locale("es");
 
@@ -88,22 +86,6 @@ export default function YourComponent() {
         console.error("Error getting documents: ", error);
       });
   }, []);
-
-  const components = {
-    event: (props) => {
-      const { paid, online } = props.event;
-      // Condicionales simples, revisa el valor bool de las propiedades paid y online, para agregar el ícono de consulta pagada, y/o el de consulta online (esto sería la idea en general, si ves como hacerlo más prolijo, mejor ((esto funciona, si traes solo un documento lo podes comprobar)))
-      if (paid == true && online == true) {
-        {
-          return <div>{props.title + "💲" + " 🎧 "}</div>;
-        }
-      } else if (paid == true) {
-        return <div>{props.title + "💲"}</div>;
-      } else if (online == true) {
-        return <div>{props.title + " 🎧 "}</div>;
-      }
-    },
-  };
 
   return (
     <>
