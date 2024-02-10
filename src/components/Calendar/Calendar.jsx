@@ -62,7 +62,7 @@ export default function YourComponent() {
   const components = {
     event: (props) => {
       const { paid, online } = props.event;
-      // Condicionales simples, revisa el valor bool de las propiedades paid y online, para agregar el ícono de consulta pagada, y/o el de consulta online (esto sería la idea en general, si ves como hacerlo más prolijo, mejor)
+      // Condicionales simples, revisa el valor bool de las propiedades paid y online, para agregar el ícono de consulta pagada, y/o el de consulta online (esto sería la idea en general, si ves como hacerlo más prolijo, mejor ((esto funciona, si traes solo un documento lo podes comprobar)))
       if (paid == true && online == true) {
         {
           return <div>{props.title + "💲" + " 🎧 "}</div>;
