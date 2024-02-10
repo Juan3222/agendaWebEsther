@@ -1,5 +1,37 @@
 .header {
-  background-color: black;
-  width: 200px;
+  background-color: #f6839c;
+  width: 100%;
   height: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  position: relative;
+  height: 70%;
+  margin-left: 2rem;
+  border-radius: 1rem;
+}
+
+.header h1 {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 5rem;
+  color: aliceblue;
+}
+
+.footer {
+  background-color: #f6839c;
+  width: 100%;
+  height: 200px;
+}
+
+.calendar {
+  margin: 3rem auto 3rem auto;
+  height: 90vh;
+  width: 80%;
+  border: 0.5rem solid #f6839c;
+  border-radius: 1rem;
 }/*# sourceMappingURL=App.css.map */
