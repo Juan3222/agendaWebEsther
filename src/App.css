@@ -1,3 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.footer {
+  background-color: #f6839c;
+  width: 100%;
+  height: 200px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .header {
   background-color: #f6839c;
   width: 100%;
@@ -20,12 +36,6 @@
   justify-content: center;
   font-size: 5rem;
   color: aliceblue;
-}
-
-.footer {
-  background-color: #f6839c;
-  width: 100%;
-  height: 200px;
 }
 
 .calendar {
