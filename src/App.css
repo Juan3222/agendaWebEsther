@@ -44,4 +44,15 @@
   width: 80%;
   border: 0.5rem solid #f6839c;
   border-radius: 1rem;
+}
+
+.addEventContainer {
+  display: flex;
+  width: 10rem;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+.addEventContainer .boton {
+  width: 5rem;
 }/*# sourceMappingURL=App.css.map */

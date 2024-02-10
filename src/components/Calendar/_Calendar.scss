@@ -5,3 +5,13 @@
   border: 0.5rem solid $color-primario;
   border-radius: 1rem;
 }
+.addEventContainer {
+  display: flex;
+  width: 10rem;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  .boton {
+    width: 5rem;
+  }
+}
