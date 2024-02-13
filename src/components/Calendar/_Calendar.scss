@@ -3,16 +3,72 @@
   height: 90vh;
   width: 80%;
   border: 0.5rem solid $color-primario;
-  border: 0.5rem solid $color-primario;
   border-radius: 1rem;
 }
 .addEventContainer {
   display: flex;
-  width: 10rem;
-  flex-direction: column;
-  align-items: center;
-  margin: auto;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin: auto auto 1rem auto;
+  padding: 1rem 0 1rem 0;
+  border: $color-primario 0.4rem solid;
+  border-radius: 1rem;
+  width: 80%;
+  .contenedorForm {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    gap: 1rem;
+  }
+  .contenedorLista{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .lista{
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .lista button{
+    width: 10%;
+    height: 2rem;
+    background-color: transparent;
+    border: $color-primario 0.2rem solid;
+    border-radius: 1rem;
+  }
+  .contenedorLista p{
+    margin-bottom: 1rem;
+  }
+  .inputForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 2rem;
+  }
+  .check {
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
   .boton {
-    width: 5rem;
+    width: 10%;
+    height: 2rem;
+    background-color: transparent;
+    border: $color-primario 0.2rem solid;
+    border-radius: 1rem;
+  }
+  .boton:active {
+    background-color: $color-primario;
+    color: aliceblue;
+  }
+  input {
+    height: 2rem;
+    width: 50%;
+    border-radius: 1rem;
+    border: $color-primario 0.2rem solid;
+    outline: none;
   }
 }
