@@ -15,6 +15,58 @@ import {
 dayjs.locale("es");
 
 export default function YourComponent() {
+  const eventosRef = collection(db, "eventos");
+
+  const localizer = dayjsLocalizer(dayjs);
+
+  const [events, setEvents] = useState([]);
+
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedEmail, setSelectedEmail] = useState("");
+  const [selectedNumber, setSelectedNumber] = useState();
+  const [selectedDate, setSelectedDate] = useState();
+  const [paid, setPaid] = useState(false);
+  const [online, setOnline] = useState(false);
+
+  const handleNameChange = (event) => {
+    setSelectedName(event.target.value);
+  };
+  const handleEmailChange = (event) => {
+    setSelectedEmail(event.target.value);
+  };
+  const handleNumberChange = (event) => {
+    setSelectedNumber(event.target.value);
+  };
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handlePaidChange = (e) => {
+    setPaid(e.target.checked);
+  };
+
+  const handleOnlineChange = (e) => {
+    setOnline(e.target.checked);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const dateInSeconds = new Date(selectedDate).getTime() / 1000;
+    await addDoc(eventosRef, {
+      title: selectedName + " | " + selectedEmail + " | " + selectedNumber,
+      start: dateInSeconds,
+      end: dateInSeconds,
+      paid: paid,
+      online: online,
+    });
+    location.reload();
+  };
+
+  // Función para borrar documentos de la colección
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(db, "eventos", id));
+    location.reload();
+  };
   const messages = {
     allDay: "Todo el día",
     previous: "Anterior",
@@ -30,50 +82,6 @@ export default function YourComponent() {
     noEventsInRange: "Sin eventos",
   };
 
-  const eventosRef = collection(db, "eventos");
-
-  const localizer = dayjsLocalizer(dayjs);
-
-  const [events, setEvents] = useState([]);
-
-  const [selectedDate, setSelectedDate] = useState();
-  const [selectedName, setSelectedName] = useState("");
-  const [paid, setPaid] = useState(false);
-  const [online, setOnline] = useState(false);
-
-  const handlePaidChange = (e) => {
-    setPaid(e.target.checked);
-  };
-
-  const handleOnlineChange = (e) => {
-    setOnline(e.target.checked);
-  };
-
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
-  };
-
-  const handleNameChange = (event) => {
-    setSelectedName(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const dateInSeconds = new Date(selectedDate).getTime() / 1000;
-    addDoc(eventosRef, {
-      title: selectedName,
-      start: dateInSeconds,
-      end: dateInSeconds,
-      paid: paid,
-      online: online,
-    });
-  };
-
-  // Función para borrar documentos de la colección
-  const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "eventos", id));
-  };
-
   useEffect(() => {
     getDocs(eventosRef)
       .then((querySnapshot) => {
@@ -83,12 +91,10 @@ export default function YourComponent() {
           console.log(data);
           let title = data.title;
 
-          // Condición para añadir "(P)" al título si data.paid es true
           if (data.paid) {
             title += " (P)";
           }
 
-          // Condición para añadir "(O)" al título si data.online es true
           if (data.online) {
             title += " (O)";
           }
@@ -100,7 +106,6 @@ export default function YourComponent() {
             title: title,
           };
           eventData.push(formattedData);
-          console.log(formattedData);
         });
         setEvents(eventData);
       })
@@ -109,26 +114,10 @@ export default function YourComponent() {
       });
   }, []);
 
-  const components = {
-    event: (props) => {
-      const { paid, online } = props.event;
-      // Condicionales simples, revisa el valor bool de las propiedades paid y online, para agregar el ícono de consulta pagada, y/o el de consulta online (esto sería la idea en general, si ves como hacerlo más prolijo, mejor ((esto funciona, si traes solo un documento lo podes comprobar)))
-      if (paid == true && online == true) {
-        {
-          return <div>{props.title + "💲" + " 🎧 "}</div>;
-        }
-      } else if (paid == true) {
-        return <div>{props.title + "💲"}</div>;
-      } else if (online == true) {
-        return <div>{props.title + " 🎧 "}</div>;
-      }
-    },
-  };
-
   return (
     <>
       <div className="calendar">
-        <Calendar localizer={localizer} messages={messages} events={events} />
+        <Calendar localizer={localizer} messages={messages} events={events} />{" "}
       </div>
 
       <form className=" addEventContainer" onSubmit={handleSubmit}>
@@ -140,6 +129,24 @@ export default function YourComponent() {
               name="nombre"
               value={selectedName}
               onChange={handleNameChange}
+            />
+          </div>
+          <div className="inputForm">
+            <label htmlFor="email">Correo electrónico:</label>
+            <input
+              type="email"
+              name="email"
+              value={selectedEmail}
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="inputForm">
+            <label htmlFor="number">Número de teléfono:</label>
+            <input
+              type="number"
+              name="number"
+              value={selectedNumber}
+              onChange={handleNumberChange}
             />
           </div>
           <div className="inputForm">
@@ -175,11 +182,13 @@ export default function YourComponent() {
         </div>
         <div className="contenedorLista">
           {events.map((data) => {
+            console.log(data);
             return (
               <div className="lista" key={data.id}>
                 <p>{data.title}</p>
+
                 <button type="button" onClick={() => handleDelete(data.id)}>
-                  borrar
+                  Borrar
                 </button>
               </div>
             );
