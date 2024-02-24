@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { db } from "../../firebase/config";
+import emailjs from "emailjs-com";
 import {
   getDocs,
   collection,
@@ -16,6 +17,7 @@ dayjs.locale("es");
 
 export default function YourComponent() {
   const eventosRef = collection(db, "eventos");
+  const form = useRef();
 
   const localizer = dayjsLocalizer(dayjs);
 
@@ -59,7 +61,18 @@ export default function YourComponent() {
       paid: paid,
       online: online,
     });
-    location.reload();
+    await emailjs
+      .sendForm("service_1hj0ko2", "template_kdllzie", form.current, {
+        publicKey: "Ddc_YWh4DGY8iqAYT",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
   };
 
   // Función para borrar documentos de la colección
@@ -88,7 +101,7 @@ export default function YourComponent() {
         const eventData = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          console.log(data);
+
           let title = data.title;
 
           if (data.paid) {
@@ -117,16 +130,26 @@ export default function YourComponent() {
   return (
     <>
       <div className="calendar">
-        <Calendar localizer={localizer} messages={messages} events={events} />{" "}
+        <Calendar
+          localizer={localizer}
+          messages={messages}
+          events={events}
+          views={{
+            month: true,
+            week: true,
+            day: true,
+            agenda: true,
+          }}
+        />{" "}
       </div>
 
-      <form className=" addEventContainer" onSubmit={handleSubmit}>
+      <form className=" addEventContainer" ref={form} onSubmit={handleSubmit}>
         <div className="contenedorForm">
           <div className="inputForm">
             <label htmlFor="nombre">Nombre:</label>
             <input
               type="text"
-              name="nombre"
+              name={selectedName}
               value={selectedName}
               onChange={handleNameChange}
             />
@@ -135,7 +158,7 @@ export default function YourComponent() {
             <label htmlFor="email">Correo electrónico:</label>
             <input
               type="email"
-              name="email"
+              name={selectedEmail}
               value={selectedEmail}
               onChange={handleEmailChange}
             />
@@ -182,7 +205,6 @@ export default function YourComponent() {
         </div>
         <div className="contenedorLista">
           {events.map((data) => {
-            console.log(data);
             return (
               <div className="lista" key={data.id}>
                 <p>{data.title}</p>
