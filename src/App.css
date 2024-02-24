@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.footer {
+  background-color: #f6839c;
+  width: 100%;
+  height: 200px;
+}
+
+.header {
+  background-color: #f6839c;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  position: relative;
+  height: 70%;
+  margin-left: 2rem;
+  border-radius: 1rem;
+}
+
+.header h1 {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 5rem;
+  color: aliceblue;
+}
+
+.calendar {
+  margin: 3rem auto 3rem auto;
+  height: 90vh;
+  width: 80%;
+  border: 0.5rem solid #f6839c;
+  border-radius: 1rem;
+}
+
+.form {
+  display: flex;
+  width: 10rem;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+.form .boton {
+  width: 5rem;
+}/*# sourceMappingURL=App.css.map */
