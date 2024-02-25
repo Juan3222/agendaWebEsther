@@ -29,6 +29,13 @@
 .rbc-calendar .rbc-time-header-cell {
   height: 4rem;
 }
+.addEventContainer {
+  display: flex;
+  justify-content: center;
+  .boton {
+    margin: 2rem 0 2rem 0;
+  }
+}
 
 @media (max-width: 767px) {
   .form {
@@ -72,12 +79,7 @@
     border: $color-primario 0.2rem solid;
     outline: none;
   }
-  .boton {
-    height: 2rem;
-    background-color: transparent;
-    border: $color-primario 0.2rem solid;
-    border-radius: 1rem;
-  }
+
   .boton:active {
     background-color: $color-primario;
     color: aliceblue;
