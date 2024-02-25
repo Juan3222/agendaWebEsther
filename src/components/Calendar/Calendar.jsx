@@ -15,6 +15,73 @@ import {
 dayjs.locale("es");
 
 export default function YourComponent() {
+<<<<<<< HEAD
+=======
+  const eventosRef = collection(db, "eventos");
+  const form = useRef();
+
+  const localizer = dayjsLocalizer(dayjs);
+
+  const [events, setEvents] = useState([]);
+
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedEmail, setSelectedEmail] = useState("");
+  const [selectedNumber, setSelectedNumber] = useState();
+  const [selectedDate, setSelectedDate] = useState();
+  const [paid, setPaid] = useState(false);
+  const [online, setOnline] = useState(false);
+
+  const handleNameChange = (event) => {
+    setSelectedName(event.target.value);
+  };
+  const handleEmailChange = (event) => {
+    setSelectedEmail(event.target.value);
+  };
+  const handleNumberChange = (event) => {
+    setSelectedNumber(event.target.value);
+  };
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handlePaidChange = (e) => {
+    setPaid(e.target.checked);
+  };
+
+  const handleOnlineChange = (e) => {
+    setOnline(e.target.checked);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const dateInSeconds = new Date(selectedDate).getTime() / 1000;
+    await addDoc(eventosRef, {
+      title: selectedName + " | " + selectedEmail + " | " + selectedNumber,
+      start: dateInSeconds,
+      end: dateInSeconds,
+      paid: paid,
+      online: online,
+    });
+    await emailjs
+      .sendForm("service_1hj0ko2", "template_kdllzie", form.current, {
+        publicKey: "Ddc_YWh4DGY8iqAYT",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
+
+  // Función para borrar documentos de la colección
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(db, "eventos", id));
+    location.reload();
+  };
+>>>>>>> feature/sendEmail
   const messages = {
     allDay: "Todo el día",
     previous: "Anterior",
