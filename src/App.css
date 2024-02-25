@@ -41,13 +41,13 @@
   border-radius: 1rem;
 }
 
-.addEventContainer {
+.form {
   display: flex;
   width: 10rem;
   flex-direction: column;
   align-items: center;
   margin: auto;
 }
-.addEventContainer .boton {
+.form .boton {
   width: 5rem;
 }/*# sourceMappingURL=App.css.map */
