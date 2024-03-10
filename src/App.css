@@ -87,11 +87,11 @@
   height: 4rem;
 }
 
-.addEventContainer {
+.formulario {
   display: flex;
   justify-content: center;
 }
-.addEventContainer .boton {
+.formulario .boton {
   margin: 2rem 0 2rem 0;
 }
 
