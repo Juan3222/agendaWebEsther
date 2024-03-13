@@ -50,11 +50,12 @@ export default function YourComponent() {
             id: doc.id,
             start: dayjs.unix(data.start).toDate(),
             end: dayjs.unix(data.end).toDate(),
-            title: title,
+            title: title + " | " + data.email + " | " + data.number,
           };
           eventData.push(formattedData);
         });
         setEvents(eventData);
+        console.log(eventData);
       })
       .catch((error) => {
         console.error("Error getting documents: ", error);
